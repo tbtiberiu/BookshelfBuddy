@@ -1,4 +1,5 @@
-﻿using BookshelfBuddy.Data.Entities;
+﻿using BookshelfBuddy.Services;
+using BookshelfBuddy.Services.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookshelfBuddy.Controllers
@@ -7,70 +8,50 @@ namespace BookshelfBuddy.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly BookService _service;
 
-        public BookController(DataContext context)
+        public BookController(BookService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Book>>> Get()
+        public ActionResult<IEnumerable<BookDto>> Get()
         {
-            return Ok(await _context.Books.ToListAsync());
+            var bookDtos = _service.GetAllBooks();
+            return Ok(bookDtos);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Book>> Get(int id)
+        public ActionResult<BookDto> Get(int id)
         {
-            var book = await _context.Books.FindAsync(id);
-            if (book == null)
+            var bookDto = _service.GetBookById(id);
+            if (bookDto == null)
             {
                 return NotFound("Book not found!");
             }
-            return Ok(book);
+            return Ok(bookDto);
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Book>>> AddBook(Book book)
+        public ActionResult AddBook(BookDto bookDto)
         {
-            _context.Books.Add(book);
-            await _context.SaveChangesAsync();
-            return Ok(await _context.Books.ToListAsync());
+            _service.AddBook(bookDto);
+            return Ok();
         }
 
-        [HttpPut]
-        public async Task<ActionResult<List<Book>>> UpdateBook(Book book)
+        [HttpPut("{id}")]
+        public ActionResult UpdateBook(int id, BookDto bookDto)
         {
-            var bookToUpdate = await _context.Books.FindAsync(book.Id);
-            if (bookToUpdate == null)
-            {
-                return NotFound("Book not found!");
-            }
-
-            bookToUpdate.Title = book.Title;
-            bookToUpdate.Author = book.Author;
-            bookToUpdate.Genre = book.Genre;
-            bookToUpdate.Description = book.Description;
-
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Books.ToListAsync());
+            _service.UpdateBook(id, bookDto);
+            return Ok();
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<List<Book>>> DeleteBook(int id)
+        public ActionResult DeleteBook(int id)
         {
-            var bookToDelete = await _context.Books.FindAsync(id);
-            if (bookToDelete == null)
-            {
-                return NotFound("Book not found!");
-            }
-
-            _context.Books.Remove(bookToDelete);
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Books.ToListAsync());
+            _service.DeleteBook(id);
+            return Ok();
         }
     }
 }
