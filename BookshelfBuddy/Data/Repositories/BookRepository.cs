@@ -17,7 +17,7 @@ namespace BookshelfBuddy.Data.Repositories
             return _context.Books.ToList();
         }
 
-        public Book GetById(int id)
+        public Book GetById(Guid id)
         {
             return _context.Books.FirstOrDefault(b => b.Id == id);
         }
@@ -42,7 +42,7 @@ namespace BookshelfBuddy.Data.Repositories
             }
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var bookToDelete = _context.Books.FirstOrDefault(b => b.Id == id);
             if (bookToDelete != null)
