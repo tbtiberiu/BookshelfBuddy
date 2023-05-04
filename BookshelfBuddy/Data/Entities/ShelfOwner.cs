@@ -6,7 +6,7 @@ namespace BookshelfBuddy.Data.Entities
     {
         [NotNull]
         public Guid Id { get; set; }
-        public string UserId { get; set; } = string.Empty;
+        public Guid UserId { get; set; } = Guid.Empty;
         public User? User { get; set; } = null;
         public List<Shelf> Shelves { get; set; } = new List<Shelf>();
     }
