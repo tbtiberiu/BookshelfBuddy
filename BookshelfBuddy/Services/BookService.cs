@@ -32,7 +32,7 @@ namespace BookshelfBuddy.Services
             return bookDtos;
         }
 
-        public BookDto GetBookById(int id)
+        public BookDto GetBookById(Guid id)
         {
             var book = _repository.GetById(id);
             if (book == null)
@@ -62,7 +62,7 @@ namespace BookshelfBuddy.Services
             _repository.Add(book);
         }
 
-        public void UpdateBook(int id, BookDto bookDto)
+        public void UpdateBook(Guid id, BookDto bookDto)
         {
             var book = _repository.GetById(id);
             if (book != null)
@@ -75,7 +75,7 @@ namespace BookshelfBuddy.Services
             }
         }
 
-        public void DeleteBook(int id)
+        public void DeleteBook(Guid id)
         {
             _repository.Delete(id);
         }

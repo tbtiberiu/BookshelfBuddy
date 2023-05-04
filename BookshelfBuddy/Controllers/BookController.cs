@@ -23,7 +23,7 @@ namespace BookshelfBuddy.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<BookDto> Get(int id)
+        public ActionResult<BookDto> Get(Guid id)
         {
             var bookDto = _service.GetBookById(id);
             if (bookDto == null)
@@ -41,14 +41,14 @@ namespace BookshelfBuddy.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateBook(int id, BookDto bookDto)
+        public ActionResult UpdateBook(Guid id, BookDto bookDto)
         {
             _service.UpdateBook(id, bookDto);
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteBook(int id)
+        public ActionResult DeleteBook(Guid id)
         {
             _service.DeleteBook(id);
             return Ok();
