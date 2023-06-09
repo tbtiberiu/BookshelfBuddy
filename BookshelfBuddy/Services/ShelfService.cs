@@ -1,5 +1,3 @@
-﻿using BookshelfBuddy.Data;
-
 namespace BookshelfBuddy.Services
 {
     public class ShelfService
