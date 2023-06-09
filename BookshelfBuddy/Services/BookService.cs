@@ -1,83 +1,89 @@
 ﻿using BookshelfBuddy.Data.Entities;
-using BookshelfBuddy.Data.Repositories;
 using BookshelfBuddy.Services.Dtos;
-using BookshelfBuddy.Services.Interfaces;
 
 namespace BookshelfBuddy.Services
 {
-    public class BookService : IBookService
+    public class BookService
     {
-        private readonly BookRepository _repository;
+        private readonly UnitOfWork _unitOfWork;
 
-        public BookService(BookRepository repository)
+        public BookService(UnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
-        public List<BookDto> GetAllBooks()
+        public List<Book> GetAll()
         {
-            var books = _repository.GetAll();
-            var bookDtos = new List<BookDto>();
-            foreach (var book in books)
+            var result = _unitOfWork.Books.GetAll();
+
+            return result;
+        }
+
+        public Book GetById(Guid bookId)
+        {
+            var result = _unitOfWork.Books.GetById(bookId);
+
+            return result;
+        }
+
+        public bool Insert(BookDto bookDto)
+        {
+            if (bookDto == null)
             {
-                bookDtos.Add(new BookDto
-                {
-                    Id = book.Id,
-                    Title = book.Title,
-                    Author = book.Author,
-                    Genre = book.Genre,
-                    Description = book.Description
-                });
+                return false;
             }
-            return bookDtos;
-        }
 
-        public BookDto GetBookById(Guid id)
-        {
-            var book = _repository.GetById(id);
-            if (book == null)
-            {
-                return null;
-            }
-            var bookDto = new BookDto
-            {
-                Id = book.Id,
-                Title = book.Title,
-                Author = book.Author,
-                Genre = book.Genre,
-                Description = book.Description
-            };
-            return bookDto;
-        }
+            var result = _unitOfWork.Shelves.GetById(bookDto.ShelfId);
+            if (result == null) return false;
 
-        public void AddBook(BookDto bookDto)
-        {
-            var book = new Book
+            var newBook = new Book
             {
                 Title = bookDto.Title,
                 Author = bookDto.Author,
                 Genre = bookDto.Genre,
-                Description = bookDto.Description
+                Description = bookDto.Description,
+                ShelfId = bookDto.ShelfId
             };
-            _repository.Add(book);
+
+            _unitOfWork.Books.Insert(newBook);
+            _unitOfWork.SaveChanges();
+
+            return true;
         }
 
-        public void UpdateBook(Guid id, BookDto bookDto)
+        public bool Update(Guid id, Book book)
         {
-            var book = _repository.GetById(id);
-            if (book != null)
+            if (id == Guid.Empty || book == null)
             {
-                book.Title = bookDto.Title;
-                book.Author = bookDto.Author;
-                book.Genre = bookDto.Genre;
-                book.Description = bookDto.Description;
-                _repository.Update(book);
+                return false;
             }
+
+            var result = _unitOfWork.Books.GetById(id);
+            if (result == null) return false;
+
+            result.Title = book.Title;
+            result.Author = book.Author;
+            result.Genre = book.Genre;
+            result.Description = book.Description;
+            result.ShelfId = book.ShelfId;
+
+            return true;
         }
 
-        public void DeleteBook(Guid id)
+        public bool Remove(Guid id)
         {
-            _repository.Delete(id);
+            if (id == Guid.Empty)
+            {
+                return false;
+            }
+
+            var result = _unitOfWork.Books.GetById(id);
+            if (result == null) return false;
+
+            _unitOfWork.Books.Remove(result);
+            _unitOfWork.SaveChanges();
+
+            return true;
         }
     }
 }

@@ -1,11 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace BookshelfBuddy.Data.Entities
+﻿namespace BookshelfBuddy.Data.Entities
 {
-    public class ShelfOwner
+    public class ShelfOwner : BaseEntity
     {
-        [NotNull]
-        public Guid Id { get; set; }
         public Guid UserId { get; set; } = Guid.Empty;
         public User? User { get; set; } = null;
         public List<Shelf> Shelves { get; set; } = new List<Shelf>();
