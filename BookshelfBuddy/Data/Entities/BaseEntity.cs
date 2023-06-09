@@ -2,11 +2,9 @@
 
 namespace BookshelfBuddy.Data.Entities
 {
-    public class Admin
+    public class BaseEntity
     {
         [NotNull]
         public Guid Id { get; set; }
-        public Guid UserId { get; set; } = Guid.Empty;
-        public User? User { get; set; } = null;
     }
 }
