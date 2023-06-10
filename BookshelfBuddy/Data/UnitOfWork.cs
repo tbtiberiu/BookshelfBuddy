@@ -10,7 +10,6 @@ namespace BookshelfBuddy.Data
         public BooksRepository Books { get; }
         public ShelvesRepository Shelves { get; }
         public UsersRepository Users { get; }
-        public ShelfOwner CurrentShelfOwner { get; set; }
 
 
         public UnitOfWork

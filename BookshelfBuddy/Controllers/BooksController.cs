@@ -56,7 +56,7 @@ namespace BookshelfBuddy.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateBook([FromBody] Book book)
+        public IActionResult UpdateBook([FromBody] BookDto book)
         {
             if (book == null)
             {
