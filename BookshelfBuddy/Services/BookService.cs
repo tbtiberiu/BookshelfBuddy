@@ -67,6 +67,9 @@ namespace BookshelfBuddy.Services
             result.Description = book.Description;
             result.ShelfId = book.ShelfId;
 
+            _unitOfWork.Books.Update(result);
+            _unitOfWork.SaveChanges();
+
             return true;
         }
 

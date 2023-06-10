@@ -58,6 +58,7 @@ namespace BookshelfBuddy.Services
             result.Title = shelf.Title;
             result.Description = shelf.Description;
             result.ShelfOwnerId = shelf.ShelfOwnerId;
+
             _unitOfWork.Shelves.Update(result);
             _unitOfWork.SaveChanges();
             return true;
