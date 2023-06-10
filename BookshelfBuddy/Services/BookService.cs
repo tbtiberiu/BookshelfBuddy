@@ -51,7 +51,7 @@ namespace BookshelfBuddy.Services
             return true;
         }
 
-        public bool Update(Guid id, Book book)
+        public bool Update(Guid id, BookDto book)
         {
             if (id == Guid.Empty || book == null)
             {
@@ -66,6 +66,9 @@ namespace BookshelfBuddy.Services
             result.Genre = book.Genre;
             result.Description = book.Description;
             result.ShelfId = book.ShelfId;
+
+            _unitOfWork.Books.Update(result);
+            _unitOfWork.SaveChanges();
 
             return true;
         }

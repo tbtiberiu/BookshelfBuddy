@@ -43,11 +43,7 @@ namespace BookshelfBuddy.Services
                 return $"Invalid password!";
             }
 
-            if (user.Role == Role.ShelfOwner)
-            {
-                var shelfOwner = unitOfWork.ShelfOwners.GetByUserId(user.Id);
-                unitOfWork.CurrentShelfOwner = shelfOwner;
-            }
+         
 
             var token = GetToken(user);
             if (token == null)
@@ -87,9 +83,6 @@ namespace BookshelfBuddy.Services
             if (user.Role == Role.ShelfOwner)
             {
                 CreateShelfOwner(user);
-
-                var shelfOwner = unitOfWork.ShelfOwners.GetByUserId(user.Id);
-                unitOfWork.CurrentShelfOwner = shelfOwner;
             }
 
             return user;
@@ -104,12 +97,13 @@ namespace BookshelfBuddy.Services
 
             var emailClaim = new Claim(ClaimTypes.Email, user.Email);
             var roleClaim = new Claim(ClaimTypes.Role, user.Role.ToString());
+            var userIdClaim = new Claim("userId", user.Id.ToString());
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Issuer = "Backend",
                 Audience = "Frontend",
-                Subject = new ClaimsIdentity(new[] { roleClaim, emailClaim }),
+                Subject = new ClaimsIdentity(new[] { roleClaim, emailClaim, userIdClaim}),
                 Expires = DateTime.Now.AddMinutes(10),
                 SigningCredentials = credentials
             };
