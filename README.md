@@ -121,6 +121,6 @@ Now you can use the API to search for books, create shelves, add books to shelve
 
 ## Database Diagram
 
-![Database Diagram](./BookshelfBuddyDBDiagram.jpg)
+![Database Diagram](./BookshelfBuddyDBDiagram.png)
 
 [Back to Top](#bookshelfbuddy-api)
