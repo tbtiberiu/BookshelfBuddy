@@ -18,12 +18,14 @@ namespace BookshelfBuddy.Controllers
         {
             _shelfService = shelfService;
         }
+
         [HttpGet]
         public IActionResult GetAll()
         {
             var result = _shelfService.GetAll();
             return Ok(result);
         }
+
         [HttpGet]
         [Route("{id}")]
         public IActionResult GetShelf(Guid id)
@@ -31,8 +33,29 @@ namespace BookshelfBuddy.Controllers
             Shelf result = _shelfService.GetById(id);
             return Ok(result);
         }
+
         [HttpPost]
+        [Route("admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult InsertShelf([FromBody] ShelfDto shelf)
+        {
+            if (shelf == null)
+            {
+                return BadRequest("Shelf cannot be null");
+            }
+
+            if (!_shelfService.Insert(shelf))
+            {
+                return BadRequest("Shelf cannot be created");
+            }
+
+            return Ok(shelf);
+        }
+
+        [HttpPost]
+        [Route("shelfOwner")]
+        [Authorize(Roles = "ShelfOwner")]
+        public IActionResult InsertShelfForShelfOwner([FromBody] ShelfDto shelf)
         {
             if (shelf == null)
             {
@@ -55,6 +78,7 @@ namespace BookshelfBuddy.Controllers
 
             return Ok(shelf);
         }
+
         [HttpPut]
         public IActionResult UpdateShelf([FromBody] ShelfDto shelf)
         {
@@ -70,6 +94,7 @@ namespace BookshelfBuddy.Controllers
 
             return Ok(shelf);
         }
+
         [HttpDelete]
         [Route("{id}")]
         public IActionResult RemoveShelf([Required] Guid id)
