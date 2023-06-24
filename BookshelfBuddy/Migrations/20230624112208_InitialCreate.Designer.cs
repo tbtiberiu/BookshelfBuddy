@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookshelfBuddy.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230609054049_InitialCreate")]
+    [Migration("20230624112208_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
