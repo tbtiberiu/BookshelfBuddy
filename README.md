@@ -19,6 +19,7 @@ Books are divided into shelves. Users can add books to a shelf, move and remove 
   - [Endpoints](#endpoints)
     - [Books](#books)
     - [Shelves](#shelves)
+  - [Database Diagram](#database-diagram)
 
 ## Setup
 
@@ -117,5 +118,9 @@ Now you can use the API to search for books, create shelves, add books to shelve
 - `PUT /api/Shelves` will update the shelf specified.
 
 - `DELETE /api/Shelves/{id}` will delete the shelf with the specified id.
+
+## Database Diagram
+
+![Database Diagram](./BookshelfBuddyDBDiagram.png)
 
 [Back to Top](#bookshelfbuddy-api)
