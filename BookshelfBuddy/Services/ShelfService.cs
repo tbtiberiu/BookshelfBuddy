@@ -1,7 +1,5 @@
 using BookshelfBuddy.Data.Entities;
 using BookshelfBuddy.Services.Dtos;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 namespace BookshelfBuddy.Services
 {
     public class ShelfService
@@ -34,6 +32,10 @@ namespace BookshelfBuddy.Services
             {
                 return false;
             }
+
+            var shelfOwner = _unitOfWork.ShelfOwners.GetById(shelfDto.ShelfOwnerId);
+            if (shelfOwner == null) return false;
+
             var newShelf = new Shelf
             {
                 Title = shelfDto.Title,
