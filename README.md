@@ -2,9 +2,9 @@
 
 ## Description
 
-This is a simple application that allows users to search for books and save them to a database. Users can also view their saved books and delete them from the database.
+This simple application allows users to search for books and save them to a database. Users can also view their saved books and delete them from the database.
 
-Books are divided into shelves. Users can add books to a shelf, move or remove them from a shelf. Users can also create new shelves.
+Books are divided into shelves. Users can add books to a shelf, move and remove them from a shelf. Users can also create new shelves.
 
 ## Table of Contents
 
@@ -49,7 +49,7 @@ Open a browser and navigate to `localhost:7027/api/swagger/index.html` to view t
 
 ### Register and Login
 
-Before using the API, you need to register a user and login. Users can have roles of either `ShelfOwner` (0) or `Admin` (1).
+Before using the API, you need to register a user and log in. Users can have roles of either `ShelfOwner` (0) or `Admin` (1).
 
 To register a user, navigate to the `POST /api/Users/register` endpoint and click the `Try it out` button.
 
@@ -67,7 +67,7 @@ Enter the following JSON in the `Request body` section:
 
 Click the `Execute` button to register the user.
 
-To login, navigate to the `POST /api/Users/login` endpoint and click the `Try it out` button.
+To log in, navigate to the `POST /api/Users/login` endpoint and click the `Try it out` button.
 
 Enter the following JSON in the `Request body` section:
 
@@ -78,7 +78,7 @@ Enter the following JSON in the `Request body` section:
 }
 ```
 
-Click the `Execute` button to login.
+Click the `Execute` button to log in.
 
 The response will contain a `token` that you can use to authenticate requests for the shelf owner created.
 
@@ -118,4 +118,4 @@ Now you can use the API to search for books, create shelves, add books to shelve
 
 - `DELETE /api/Shelves/{id}` will delete the shelf with the specified id.
 
-[Back to Top](#bookshelfbuddy)
+[Back to Top](#bookshelfbuddy-api)
